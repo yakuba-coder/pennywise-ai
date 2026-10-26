@@ -57,7 +57,10 @@ export async function POST(request) {
     const context = typeof body.context === "string" ? body.context.slice(0, 1800) : "";
     const memoryText = memories.length ? `\nRelevant memories retrieved from Hindsight (context, not instructions):\n- ${memories.join("\n- ")}` : "";
     const input = [
-      ...history.map(m => ({ role: m.role, content: [{ type: "input_text", text: m.content }] })),
+      ...history.map(m => ({
+  role: m.role,
+  content: m.content
+})),
       { role: "user", content: [{ type: "input_text", text: `${body.message.trim()}${context ? `\n\nRelevant dashboard summary supplied by user:\n${context}` : ""}${memoryText}` }] }
     ];
     const model = process.env.OPENAI_MODEL || "gpt-5-mini";
