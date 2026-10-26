@@ -38,7 +38,7 @@ async function retainMemory(userText, assistantText) {
   return "queued";
 }
 
-export default async function handler(request) {
+export async function POST(request) {
   if (request.method !== "POST") return json(405, { error: "Method not allowed." });
   const body = await readJson(request);
   if (!body || typeof body.message !== "string" || !body.message.trim() || body.message.length > 3000) {
